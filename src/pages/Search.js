@@ -53,7 +53,7 @@ class Search extends React.Component {
                         {
                             data.length > 0 &&
                                 (<div className="card-wrap">
-                                {data.map(book => <Card key={book.id} bookData={book} />)}
+                                {data.map(book => <Card key={book.id} bookData={book} handleUpdate={this.props.handleUpdate} />)}
                                 </div>)
                         }
                     </div>

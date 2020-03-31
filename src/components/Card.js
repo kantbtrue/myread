@@ -4,7 +4,7 @@ import * as BooksAPI from '../BooksAPI';
 class Card extends React.Component {
 
     state = {
-        shelf: ''
+        shelf: this.props.bookData.shelf ?? ''
     };
 
     componentDidMount () {
@@ -15,26 +15,19 @@ class Card extends React.Component {
                 })
             }
         );
-    }
-
-    handleSuccess(){
-        alert('Added to the shelf. Refresh the page to see the changes.');
-    }
+    };
 
     handleChange = (e) => {
-        this.setState({
-            shelf: e.target.value
-        });
-        BooksAPI.update(this.props.bookData, e.target.value)
-        .then(this.handleSuccess);
-    }
-    
+        this.props.handleUpdate(this.props.bookData, e.target.value);
+        BooksAPI.update(this.props.bookData, e.target.value);
+    };
+
     render () {
         const { bookData } = this.props;
-        return(
+        return (
             <div className="card">
                 <div className="card-img">
-                    <img src={bookData.hasOwnProperty("imageLinks")?bookData.imageLinks.thumbnail:"https://via.placeholder.com/250x350"} alt="" />
+                    <img src={bookData.hasOwnProperty("imageLinks") ? bookData.imageLinks.thumbnail : "https://via.placeholder.com/250x350"} alt="" />
                 </div>
                 <div className="card-content">
                     <div className="card-content__left">
@@ -48,7 +41,6 @@ class Card extends React.Component {
                             <option value="wantToRead">Want to read</option>
                             <option value="currentlyReading">Currently Reading</option>
                         </select>
-                        {this.state.shelf === 'none' && (<div className="select-shelf">Add to your shelf</div>)}
                     </div>
                 </div>
             </div>

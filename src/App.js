@@ -31,8 +31,13 @@ class App extends React.Component {
         );
     }
 
+    handleUpdate = (addBook, shelf) => {
+        addBook = {...addBook, shelf: shelf};
+        this.setState({data: this.state.data.filter(data => data.id !== addBook.id).concat(addBook)});
+    }
 
     render () {
+        console.log();
         const { isLoading, data, error } = this.state;
         if (error) {
             return <div className="error">Error: {error.message}</div>;
@@ -45,12 +50,12 @@ class App extends React.Component {
                     <Header title="My Read" />
                     <main className="main">
                         <Switch> 
-                            <Route exact path="/search" component={Search} />
+                            <Route exact path="/search" component={() => <Search handleUpdate={this.handleUpdate} />} />                            
                             <Route exact path="/">
                                 <Link to="/search" className="add-new">+</Link>
-                                <Category booksData={data.filter(book => book.shelf === "currentlyReading") } shelfTitle="Currently Reading" />
-                                <Category booksData={data.filter(book => book.shelf === "wantToRead")}  shelfTitle="Want to Read" />         
-                                <Category booksData={data.filter(book => book.shelf === "read")} shelfTitle="Read" />
+                                <Category booksData={data.filter(book => book.shelf === "currentlyReading") } shelfTitle="Currently Reading" handleUpdate={this.handleUpdate}/>
+                                <Category booksData={data.filter(book => book.shelf === "wantToRead")}  shelfTitle="Want to Read" handleUpdate={this.handleUpdate}/>         
+                                <Category booksData={data.filter(book => book.shelf === "read")} shelfTitle="Read" handleUpdate={this.handleUpdate}/>
                             </Route>
                             <Route component={NotFound} />
                         </Switch>

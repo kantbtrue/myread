@@ -48,9 +48,9 @@ class App extends React.Component {
                             <Route exact path="/search" component={Search} />
                             <Route exact path="/">
                                 <Link to="/search" className="add-new">+</Link>
-                                <Category bookData={data} shelf="currentlyReading" shelfTitle="Currently Reading" />
-                                <Category bookData={data} shelf="wantToRead" shelfTitle="Want to Read" />         
-                                <Category bookData={data} shelf="read" shelfTitle="Read" />
+                                <Category booksData={data.filter(book => book.shelf === "currentlyReading") } shelfTitle="Currently Reading" />
+                                <Category booksData={data.filter(book => book.shelf === "wantToRead")}  shelfTitle="Want to Read" />         
+                                <Category booksData={data.filter(book => book.shelf === "read")} shelfTitle="Read" />
                             </Route>
                             <Route component={NotFound} />
                         </Switch>
